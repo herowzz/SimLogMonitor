@@ -1,0 +1,113 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>SimLogMonitor LogMonitor</title>
+<meta name="description" content="Logback Monitor">
+<meta name="keywords" content="log monitor">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.1/css/amazeui.css" />
+<link rel="stylesheet" href="http://amazeui.org/css/admin.css">
+</head>
+<body>
+	<!-- content start -->
+	<div class="admin-content">
+		<div class="admin-content-body">
+			<div class="am-cf am-padding am-padding-bottom-0">
+				<div class="am-fl">
+					<strong class="am-text-primary am-text-lg">SimLogMonitor Server</strong>
+				</div>
+			</div>
+			<div class="am-cf am-padding am-padding-bottom-0">
+				<table style="width: 100%" border="0">
+					<tr>
+						<td width="15%"><input id="filterMsg" type="text" class="am-input-xs" placeholder="filter Info">
+							<button type="button" onclick="filter();" class="am-btn am-btn-primary am-btn-xs">filter</button>
+							<button type="button" id="loading-example-btn" onclick="filterRemove()" class="am-btn am-btn-primary am-btn-xs">reset</button>&nbsp;&nbsp; <input type="checkbox" class="am-input-xs" onchange="setLocking();">&nbsp;Lock</td>
+					</tr>
+				</table>
+			</div>
+			<hr />
+			<div class="am-g error-log">
+				<div class="am-u-sm-12 am-u-sm-centered">
+					<pre id="msgBody" class="am-pre-scrollable"></pre>
+				</div>
+			</div>
+		</div>
+		<footer class="admin-content-footer">
+			<hr>
+			<p class="am-padding-left">Copyright &copy; SimLogMonitor</p>
+		</footer>
+	</div>
+	<!-- content end -->
+	[if lt IE 9]
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.7.1/js/amazeui.ie8polyfill.min.js"></script>
+	[endif]
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<!--<![endif]-->
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
+	<script>
+		var locking = 0;
+		var filterMsg = "";
+		var PATH = "${webSocketLocation}";
+		var websocket = null;
+		if (window['WebSocket'])
+			websocket = new WebSocket(PATH);
+		else
+			websocket = new SockJS(PATH + '/socketjs');
+
+		websocket.onopen = function(event) {
+			console.log('open', event);
+		};
+		websocket.onmessage = function(event) {
+			console.log('message', event.data);
+			var data = event.data;
+			var i = 0;
+			if (filterMsg != "") {
+				i = data.indexOf(filterMsg, 0);
+			}
+			if (i != -1) {
+				var html = '<span class="am-text-success">' + event.data + '</span><br>';
+				$("#msgBody").append(html);
+				if (locking == 0) {
+					setScroll();
+				}
+			}
+
+		};
+		
+		function setLocking() {
+			if (locking == 0) {
+				locking = 1;
+			} else {
+				locking = 0;
+			}
+		}
+		function filter() {
+			filterMsg = $("#filterMsg").val();
+			if (filterMsg != "") {
+				filterMsg = $("#filterMsg").val();
+				alert("filter success！" + filterMsg);
+			} else {
+				alert("please input the filter string!");
+			}
+
+		}
+		
+		function filterRemove() {
+			$("#filterMsg").val("");
+			filterMsg = "";
+			alert("reset filter success!");
+		}
+		
+		function setScroll() {
+			document.getElementById('msgBody').scrollTop = document
+					.getElementById('msgBody').scrollHeight;
+		}
+	</script>
+</body>
+</html>

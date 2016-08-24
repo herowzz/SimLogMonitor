@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>[%d] [%t] [%p] \(%F:%M:%L\) %n%m%n</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="SOCKET" class="ch.qos.logback.classic.net.SocketAppender">
+		<RemoteHost>127.0.0.1</RemoteHost>
+		<Port>9988</Port>
+		<ReconnectionDelay>10000</ReconnectionDelay>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SOCKET" />
+	</root>
+
+</configuration>

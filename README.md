@@ -7,7 +7,7 @@ Your project can config the logback.xml to collect the log info by socket to the
 
 SimLogMonitor open the collectPort(9988) to collect the logback log info and open the watcherPort(8088) to show the  Real-time log
 
-(2) Set up the logback.xml config like this:
+(2) Your Application need Set up the logback.xml config like this:
 ```java
 <appender name="SOCKET" class="ch.qos.logback.classic.net.SocketAppender">
     	<RemoteHost>{SimLogMonitor-IP}</RemoteHost>

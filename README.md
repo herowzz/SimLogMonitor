@@ -3,8 +3,9 @@ SimLogMonitor is a simple log realtime monitor base logback and websocket.
 Your project can config the logback.xml to collect the log info by socket to the SimLogMonitor Server. Then you can see the Real-time log in the SimLogMonitor Server.
 
 ## Getting Started
-(1)  Check out the source code and start the com.github.herowzz.simlogmonitor.LogServer Main class
-   SimLogMonitor open the collectPort(9988) to collect the logback log info and open the watcherPort(8088) to show the  Real-time log
+(1)  Check out the source code and start the com.github.herowzz.simlogmonitor.LogServer Main class.  
+
+SimLogMonitor open the collectPort(9988) to collect the logback log info and open the watcherPort(8088) to show the  Real-time log
 
 (2) Set up the logback.xml config like this:
 ```java

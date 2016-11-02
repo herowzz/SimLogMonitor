@@ -1,4 +1,4 @@
-# SimLogMonitor 
+# SimLogMonitor
 SimLogMonitor is a simple log realtime monitor base logback and websocket.
 Your project can config the logback.xml to collect the log info by socket to the SimLogMonitor Server. Then you can see the Real-time log in the SimLogMonitor Server.
 
